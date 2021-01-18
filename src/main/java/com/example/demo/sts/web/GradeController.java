@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.cmm.enm.Messenger;
 import com.example.demo.cmm.enm.Sql;
 import com.example.demo.cmm.enm.Table;
-import com.example.demo.cmm.service.CommonMapper;
 import com.example.demo.cmm.utl.Box;
 import com.example.demo.cmm.utl.Pagination;
 import com.example.demo.sts.service.Grade;
@@ -14,7 +13,7 @@ import com.example.demo.sts.service.GradeService;
 import com.example.demo.sts.service.SubjectService;
 import com.example.demo.sym.service.ManagerService;
 import com.example.demo.sym.service.TeacherService;
-import com.example.demo.uss.service.StudentMapper;
+import com.example.demo.uss.service.StudentRepository;
 import com.example.demo.uss.service.StudentService;
 
 import org.slf4j.Logger;
@@ -35,13 +34,14 @@ public class GradeController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired StudentService studentService;
     @Autowired GradeService gradeService;
-    @Autowired StudentMapper studentMapper;
+    @Autowired
+    StudentRepository studentRepository;
     @Autowired
     GradeRepository gradeRepository;
     @Autowired SubjectService subjectService;
     @Autowired TeacherService teacherService;
     @Autowired ManagerService managerService;
-    @Autowired CommonMapper commonMapper;
+
     @Autowired Pagination page;
     @Autowired Box<String> bx;
     

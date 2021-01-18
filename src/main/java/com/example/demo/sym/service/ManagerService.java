@@ -1,21 +1,19 @@
 package com.example.demo.sym.service;
-import static com.example.demo.cmm.utl.Util.*;
-import static java.util.stream.Collectors.*;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.cmm.utl.DummyGenerator;
-import com.example.demo.sts.service.Grade;
 
 @Service
 public class ManagerService {
-	@Autowired ManagerMapper managerMapper;
+	@Autowired
+	ManagerRepository managerRepository;
 	@Autowired DummyGenerator dummy;
 
 	public int register(Manager manager) {
-		return managerMapper.insert(manager);
+		return managerRepository.insert(manager);
 	}
 
 	public int insertMany(int count) {
@@ -25,7 +23,7 @@ public class ManagerService {
 			//m = dummy.makeManager();
 			//list.add(m);
 		}
-		return managerMapper.insertMany(list);
+		return managerRepository.insertMany(list);
 	}
 
 }

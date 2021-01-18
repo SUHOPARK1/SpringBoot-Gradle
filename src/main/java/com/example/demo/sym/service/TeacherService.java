@@ -16,12 +16,14 @@ import com.example.demo.cmm.utl.Box;
 import com.example.demo.cmm.utl.DummyGenerator;
 import com.example.demo.cmm.utl.Pagination;
 import com.example.demo.sts.service.GradeVo;
-import com.example.demo.sts.service.SubjectMapper;
+import com.example.demo.sts.service.SubjectRepository;
 
 @Service
 public class TeacherService {
-	@Autowired TeacherMapper teacherMapper;
-	@Autowired SubjectMapper subjectMapper;
+	@Autowired
+	TeacherRepository teacherRepository;
+	@Autowired
+	SubjectRepository subjectRepository;
 	@Autowired DummyGenerator dummy;
 	@Autowired Box<Object> bx;
 
@@ -35,18 +37,18 @@ public class TeacherService {
 			t = dummy.makeTeacher(i+1);
 			tlist.add(t);
 		}
-		teacherMapper.insertMany(tlist);
+		teacherRepository.insertMany(tlist);
 	}
 
 	public int register(Teacher teacher) {
 		// TODO Auto-generated method stub
-		return teacherMapper.insert(teacher);
+		return teacherRepository.insert(teacher);
 	}
 	public Map<?,?> selectAllBySubject(Box<String> param){
 		String pageNum = param.get("pageNum").toString();
 		String pageSize = param.get("pageSize").toString();
 
-		List<GradeVo> list = teacherMapper.selectAll(param.get());
+		List<GradeVo> list = teacherRepository.selectAll(param.get());
 
 		GradeVo vo = new GradeVo();
 		//IntSummaryStatistics is =list.stream().collect(summarizingInt(GradeVo::getScore));// 204
@@ -70,7 +72,7 @@ public class TeacherService {
 				integer.apply(pageNum),
 				list.size()));
 
-		bx.put("subjects",subjectMapper.selectAllSubject()
+		bx.put("subjects", subjectRepository.selectAllSubject()
 				.stream()
 				.collect(joining(",")));
 

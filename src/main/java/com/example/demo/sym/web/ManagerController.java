@@ -1,7 +1,4 @@
 package com.example.demo.sym.web;
-import static com.example.demo.cmm.utl.Util.*;
-import static java.util.stream.Collectors.*;
-import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.cmm.enm.Messenger;
 import com.example.demo.sym.service.Manager;
-import com.example.demo.sym.service.ManagerMapper;
+import com.example.demo.sym.service.ManagerRepository;
 import com.example.demo.sym.service.ManagerService;
 
 @RestController
@@ -22,7 +19,8 @@ public class ManagerController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired ManagerService managerService;
-    @Autowired ManagerMapper managerMapper;
+    @Autowired
+    ManagerRepository managerRepository;
 
 
     @PostMapping("")
@@ -34,7 +32,7 @@ public class ManagerController {
 
     @PostMapping("/access")
     public Manager access(@RequestBody Manager manager) {
-        return managerMapper.access(manager);
+        return managerRepository.access(manager);
     }
 
 }

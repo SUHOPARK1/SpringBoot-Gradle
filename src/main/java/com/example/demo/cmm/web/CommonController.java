@@ -11,7 +11,8 @@ import com.example.demo.cmm.service.CommonService;
 @RestController @RequestMapping("/common")
 public class CommonController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Autowired CommonService commonService;
+	@Autowired
+	CommonService commonService;
 	@GetMapping("/generate/db")
     public Messenger generateDB() {
     	logger.info("Students Truncated Execute ...");
