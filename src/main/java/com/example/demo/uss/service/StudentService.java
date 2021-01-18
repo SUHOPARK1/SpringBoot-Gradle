@@ -16,39 +16,39 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class StudentService{
-    @Autowired DummyGenerator dummy;
+	@Autowired DummyGenerator dummy;
     @Autowired
-    StudentRepository studentRepository;
+	StudentRepository studentRepository;
     @Autowired Box<String> bx;
     @Transactional
-    public int insertMany(int count) {
-        for(int i=0; i < count; i++) {
-            studentRepository.insert(dummy.makeStudent());
-        }
-        return count();
+    public long insertMany(int count) {
+    	for(int i=0; i < count; i++) {
+    		studentRepository.save(dummy.makeStudent());
+    	}
+    	return count(); 
     }
     @Transactional
     public int truncate() {
-        bx.clear();
-        bx.put("TRUNCATE_STUDENTS", Sql.TRUNCATE.toString() + Table.STUDENTS);
-        studentRepository.truncate(bx);
-        return count() != 0 ? 0 : 1;
+    	bx.clear();
+    	bx.put("TRUNCATE_STUDENTS", Sql.TRUNCATE.toString() + Table.STUDENTS);
+    	studentRepository.deleteAll();
+    	return count() != 0 ? 0 : 1;
     }
-
-    public int count() {
-        bx.clear();
-        bx.put("COUNT_STUDENTS", Sql.TOTAL_COUNT.toString() +  Table.STUDENTS);
-        return studentRepository.count(bx);
+    
+    public long count() {
+    	bx.clear();
+    	bx.put("COUNT_STUDENTS", Sql.TOTAL_COUNT.toString() +  Table.STUDENTS);
+    	return studentRepository.count();
     }
-
+    
     public List<Student> list(Pagination page){
     	/*
-    	return studentMapper.list().stream()
+    	return studentRepository.list().stream()
     			.sorted(comparing(Student::getStuNum).reversed())
     			.skip(page.getPageSize() * (page.getPageNum()-1))
     			.limit(page.getPageSize())
     			.collect(Collectors.toList()); */
-        return null;
+		return null;
     }
     
     /*public List<Student> selectByGender(String gender){
@@ -56,5 +56,5 @@ public class StudentService{
     			
     			.collect(toList());
     }*/
-
+    
 }

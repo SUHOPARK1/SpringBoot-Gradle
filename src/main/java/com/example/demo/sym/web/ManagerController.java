@@ -13,26 +13,35 @@ import com.example.demo.sym.service.Manager;
 import com.example.demo.sym.service.ManagerRepository;
 import com.example.demo.sym.service.ManagerService;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/managers")
 public class ManagerController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    
     @Autowired ManagerService managerService;
     @Autowired
     ManagerRepository managerRepository;
-
+    
 
     @PostMapping("")
     public Messenger register(@RequestBody Manager manager) {
-        return (managerService.register(manager) == 1)
-                ? Messenger.SUCCESS
-                : Messenger.FAILURE;
+        managerRepository.save(manager);
+        return Messenger.SUCCESS;
     }
-
+    
     @PostMapping("/access")
-    public Manager access(@RequestBody Manager manager) {
-        return managerRepository.access(manager);
+    public Optional<Manager> access(@RequestBody Manager manager) {
+    	return managerRepository.findById(0);
     }
-
+    
 }
+
+
+
+
+
+
+
+

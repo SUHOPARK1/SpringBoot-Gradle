@@ -15,12 +15,12 @@ import javax.persistence.*;
 @Table(name="teachers")
 public class Teacher {
 
-	public Teacher(String name, String password, String profileImage, int subNum) {
-		this.name = name;
-		this.password = password;
-		this.subNum = subNum;
-		this.profileImage = profileImage;
-	}
+    public Teacher(String name, String password, String profileImage, int subNum) {
+    	this.name = name;
+    	this.password = password;
+    	this.subNum = subNum;
+    	this.profileImage = profileImage;
+    }
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

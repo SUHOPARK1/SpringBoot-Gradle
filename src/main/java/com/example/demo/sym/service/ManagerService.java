@@ -8,22 +8,22 @@ import com.example.demo.cmm.utl.DummyGenerator;
 
 @Service
 public class ManagerService {
-	@Autowired
+    @Autowired
 	ManagerRepository managerRepository;
-	@Autowired DummyGenerator dummy;
+    @Autowired DummyGenerator dummy;
 
-	public int register(Manager manager) {
-		return managerRepository.insert(manager);
-	}
+    public void register(Manager manager) {
+        managerRepository.save(manager);
+    }
 
-	public int insertMany(int count) {
+	public void insertMany(int count) {
 		var list = new ArrayList<Manager>();
 		Manager m = null;
 		for(int i=0; i< count; i++) {
 			//m = dummy.makeManager();
 			//list.add(m);
 		}
-		return managerRepository.insertMany(list);
+		managerRepository.saveAll(null);
 	}
 
 }

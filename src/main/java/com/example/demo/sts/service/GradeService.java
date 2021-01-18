@@ -9,20 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GradeService {
 	@Autowired
-	GradeRepository gradeRepository;
+    GradeRepository gradeRepository;
 	@Autowired DummyGenerator dummy;
-
+	
 	@Transactional
 	public void insertMany() {
 		// int stuNum, int subNum, String examDate, int score
 		for(int i=1; i<= 100; i++ ) {
 			for(int j=1; j<=5; j++) {
-				gradeRepository.insert(dummy.makeGrade(i, j));
+				gradeRepository.save(dummy.makeGrade(i, j));
 			}
 		}
-	}
-
+    }
+	
 	public Vector<GradeVo> selectAllforExam(String examDate){
-		return gradeRepository.selectJoinAll(examDate);
+		return null;
 	}
 }

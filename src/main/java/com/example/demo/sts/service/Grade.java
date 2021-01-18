@@ -25,13 +25,13 @@ public class Grade {
 	@Column(name = "exam_date") private String examDate;
 	@Column(name = "pass_exam") private String passExam;
 
-
-	public Grade(int stuNum, int subNum, String examDate, int score) {
-		this.subNum = subNum;
-		this.examDate = examDate;
-		this.score = score;
-		this.stuNum = stuNum;
-	}
+    
+    public Grade(int stuNum, int subNum, String examDate, int score) {
+    	this.subNum = subNum;
+    	this.examDate = examDate;
+    	this.score = score;
+    	this.stuNum = stuNum;
+    }
 	@Builder
 	private Grade(int stuNum,
 				  int subNum,

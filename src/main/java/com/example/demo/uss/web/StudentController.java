@@ -1,4 +1,5 @@
 package com.example.demo.uss.web;
+import static com.example.demo.cmm.utl.Util.*;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
-import static com.example.demo.cmm.utl.Util.*;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,17 +43,18 @@ public class StudentController {
     @Autowired SubjectService subjectService;
     @Autowired TeacherService teacherService;
     @Autowired ManagerService managerService;
-    @Autowired CommonMapper commonMapper;
     @Autowired Pagination page;
     @Autowired Box<String> bx;
     @PostMapping("")
     public Messenger register(@RequestBody Student s){
-        return studentRepository.insert(s)==1?Messenger.SUCCESS:Messenger.FAILURE;
+        studentRepository.save(s);
+        return studentRepository.count()==1?Messenger.SUCCESS:Messenger.FAILURE;
     }
     @PostMapping("/login")
     public Map<?,?> login(@RequestBody Student s){
         var map = new HashMap<>();
-        Student result = studentRepository.login(s);
+        // Optional<Student> result = studentRepository.findById(s.getStuNum());
+        Optional<Student> result = null;
         map.put("message", result!=null?"SUCCESS":"FAILURE");
         map.put("sessionUser", result);
         return map;
@@ -60,71 +62,67 @@ public class StudentController {
     /*
     @GetMapping("/{userid}")
     public Student profile(@PathVariable String userid){
-        return studentMapper.selectById(userid);
+        return studentRepository.selectById(userid);
     }
     */
-    @GetMapping("/page/{pageSize}/{pageNum}")
-    public Map<?,?> list(@PathVariable String pageSize,
+    @GetMapping("/list/{pageSize}/{pageNum}")
+    public Map<?,?> list(@PathVariable String pageSize, 
     					@PathVariable String pageNum){
     	logger.info("Students List Execute ...");
-    	var map = new HashMap<String, Object>();
-    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
+    	var map = new HashMap<String,String>();
+    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);	
     	var page = new Pagination(
-				Table.STUDENTS.toString(),
+				Table.STUDENTS.toString(), 
 				integer.apply(pageSize),
-				integer.apply(pageNum),
-				commonMapper.totalCount(bx))
+				integer.apply(pageNum), 100)
 				;
-    	map.clear();
-    	map.put("list", studentService.list(page));
-    	map.put("page", page);
-        return map;
+    	var map2 = new HashMap<String, Object>();
+    	map2.put("list", studentService.list(page));
+    	map2.put("page", page);
+        return map2;
     }
     @GetMapping("/page/{pageSize}/{pageNum}/selectAll")
-    public List<?> selectAll(@PathVariable String pageSize,
+    public List<?> selectAll(@PathVariable String pageSize, 
     					@PathVariable String pageNum){
     	logger.info("Students List Execute ...");
-    	var map = new HashMap<String, Object>();
-    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
-        return studentRepository.selectAll(new Pagination(
-				Table.STUDENTS.toString(),
-				integer.apply(pageSize),
-				integer.apply(pageNum),
-				commonMapper.totalCount(bx)));
+    	var map = new HashMap<String,String>();
+    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);	
+        return studentRepository.findAll();
     }
-
+    
     @PutMapping("")
     public Messenger update(@RequestBody Student s){
-        return studentRepository.update(s)==1?Messenger.SUCCESS:Messenger.FAILURE;
+        return Messenger.SUCCESS;
     }
     @DeleteMapping("")
     public Messenger delete(@RequestBody Student s){
     	logger.info("Students Deleted Execute ...");
-        return studentRepository.delete(s) ==1?Messenger.SUCCESS:Messenger.FAILURE;
+        studentRepository.delete(s);
+        return  Messenger.SUCCESS;
     }
-
+    
     @GetMapping("/insert-many/{count}")
     public String insertMany(@PathVariable String count) {
     	logger.info(String.format("Insert %s Students ...",count));
-    	bx.clear();
-    	bx.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
-    	if(commonMapper.totalCount(bx) == 0) {
+    	var map = new HashMap<String,String>();
+    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
+    	if(studentRepository.count() == 0) {
     		managerService.insertMany(1);
         	subjectService.insertMany(5);
         	studentService.insertMany(Integer.parseInt(count));
         	teacherService.insertMany(5);
         	//gradeService.insertMany(Integer.parseInt(count)); 나중에 추가함
     	}
-    	bx.clear();
-    	bx.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
-    	return string.apply(commonMapper.totalCount(bx));
+    	map.clear();
+    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
+    	return string.apply(studentRepository.count());
     }
     @GetMapping("/count")
     public String count() {
     	logger.info(String.format("Count Students ..."));
-    	bx.clear();
-    	bx.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);
-    	return string.apply(commonMapper.totalCount(bx));
+    	var map = new HashMap<String,String>();
+    	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.STUDENTS);	
+    	return string.apply(studentRepository.count());
     }
     @GetMapping("/find-by-gender/{gender}")
     public List<Student> findByGender(@PathVariable String gender) {

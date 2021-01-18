@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/subjects")
 @RestController
 public class SubjectController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired StudentService studentService;
     @Autowired GradeService gradeService;
     @Autowired
@@ -49,43 +49,52 @@ public class SubjectController {
     @Autowired SubjectService subjectService;
     @Autowired TeacherService teacherService;
     @Autowired ManagerService managerService;
-    @Autowired CommonMapper commonMapper;
     @Autowired Pagination page;
     @Autowired Box<String> bx;
-
+    
     @PostMapping("")
     public Messenger register(@RequestBody Subject s){
-
-        // Get the List
-        List<String> g
-                = Arrays.asList("geeks", "for", "geeks");
-
-        // Collect the list as map
-        // by groupingBy() method
+    	
+    	// Get the List 
+        List<String> g 
+            = Arrays.asList("geeks", "for", "geeks"); 
+  
+        // Collect the list as map 
+        // by groupingBy() method 
         subjectService.groupBySubject(bx);
-        return subjectRepository.insert(s)==1?Messenger.SUCCESS:Messenger.FAILURE;
+        subjectRepository.save(s);
+        return subjectRepository.count()!=0?Messenger.SUCCESS:Messenger.FAILURE;
     }
-
+   
     @GetMapping("/groupBy/{examDate}/{subNum}")
     public Map<?,?> totalScoreGroupBySubject(
-            @PathVariable String examDate,
-            @PathVariable String subNum){
-        bx.put("examDate", examDate);
-        bx.put("subNum", subNum);
-        subjectService.groupBySubject(bx);
-        return null;
+    		@PathVariable String examDate,
+    		@PathVariable String subNum){
+    	bx.put("examDate", examDate);
+    	bx.put("subNum", subNum);
+    	subjectService.groupBySubject(bx);
+    	return null;
     }
     @GetMapping("/groupByGrade/{examDate}/{subNum}")
     public Map<?,?> groupByGrade(
-            @PathVariable String examDate,
-            @PathVariable String subNum){
-        bx.put("examDate", examDate);
-        bx.put("subNum", subNum);
-        subjectService.groupBySubject(bx);
-        return null;
+    		@PathVariable String examDate,
+    		@PathVariable String subNum){
+    	bx.put("examDate", examDate);
+    	bx.put("subNum", subNum);
+    	subjectService.groupBySubject(bx);
+    	return null;
     }
-
-
-
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+
+

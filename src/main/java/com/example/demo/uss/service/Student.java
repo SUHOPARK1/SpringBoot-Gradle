@@ -29,22 +29,22 @@ public class Student {
 	@Column(name = "profile_image") private String profileImage;
 
 
-	public Student(String userid,
-				   String password,
-				   String name,
-				   String birthday,
-				   String gender,
-				   String regDate,
-				   String profileImage,int mgrNum) {
-		this.userid = userid;
-		this.password = password;
-		this.name = name;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.regDate = regDate;
-		this.profileImage = profileImage;
-		this.mgrNum = mgrNum;
-	}
+    public Student(String userid,
+			String password,
+			String name,
+			String birthday, 
+			String gender,
+			String regDate,
+			String profileImage,int mgrNum) {
+    	this.userid = userid;
+    	this.password = password;
+    	this.name = name;
+    	this.birthday = birthday;
+    	this.gender = gender;
+    	this.regDate = regDate;
+    	this.profileImage = profileImage;
+    	this.mgrNum = mgrNum;
+    }
 
 	@Builder
 	private Student(int mgrNum,

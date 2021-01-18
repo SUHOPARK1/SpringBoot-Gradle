@@ -1,6 +1,7 @@
 package com.example.demo.cmm.utl;
-
-import java.util.Arrays; 
+import static com.example.demo.cmm.utl.Util.*;
+import static java.util.stream.Collectors.*;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -16,11 +17,21 @@ import com.example.demo.sym.service.Manager;
 import com.example.demo.sym.service.Teacher;
 import com.example.demo.uss.service.Student;
 
-import static com.example.demo.cmm.utl.Util.*;
 
 @Service("dummy")
 public class DummyGenerator {
-
+	/*********************************
+	 * Student Dummy Data Generator 
+	 * *******************************
+	 */
+	/**
+	 * 1970 ~ 2000 사이의 랜덤한 연도수 뽑기 
+	 * 
+	 * 윤년은 해당 연도를 4로 나눈 값이 0인 것을 의미한다. 
+	 * && 그중 100으로 나눈 값이 0인 것은 윤년에서 제외하나, 
+	 * || 400으로 나눈 값이 0인 것은 윤년으로 포함된다. 
+	 * 그 외의 나머지 연도는 평년이다.
+	 * */
 	public String makeBirthday() {
 		int year = random.apply(1970, 2000);
 		int month = random.apply(1, 13);
@@ -165,19 +176,17 @@ public class DummyGenerator {
 	public Teacher makeTeacher(int i) {
 		return new Teacher(
 				makeUsername(), 
-				"1", 
+				"1", // 비번
 				Path.DEFAULT_PROFILE.toString(),
-				i
-				);
-	}
+				i); // makeTeacher() 를 1 ~ 5 까지만 생성하기 위해
+	}// makeSubNum()
 	/*********************************
 	 * Manager Dummy Data Generator 
 	 * *******************************
-	 */
-	/****
+
 	public Manager makeManager() {
 		return new Manager("",makeEmail(), "1", makeUsername(), Path.DEFAULT_PROFILE.toString());
-	}*/
+	} */
 	
 }
 

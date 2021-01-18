@@ -1,11 +1,9 @@
 package com.example.demo.sts.web;
-
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.cmm.enm.Messenger;
 import com.example.demo.cmm.enm.Sql;
 import com.example.demo.cmm.enm.Table;
-import com.example.demo.cmm.utl.Box;
 import com.example.demo.cmm.utl.Pagination;
 import com.example.demo.sts.service.Grade;
 import com.example.demo.sts.service.GradeRepository;
@@ -41,22 +39,21 @@ public class GradeController {
     @Autowired SubjectService subjectService;
     @Autowired TeacherService teacherService;
     @Autowired ManagerService managerService;
-
     @Autowired Pagination page;
-    @Autowired Box<String> bx;
     
     @PostMapping("")
     public Messenger register(@RequestBody Grade g){
-        return gradeRepository.insert(g)==1?Messenger.SUCCESS:Messenger.FAILURE;
+        gradeRepository.save(g);
+        return Messenger.SUCCESS;
     }
    
     @GetMapping("/register")
     public Messenger registerMany(){
+    	var map = new HashMap<String, String>();
     	logger.info("Grade List Register ...");
     	gradeService.insertMany();
-    	var map = new HashMap<String, Object>();
     	map.put("TOTAL_COUNT", Sql.TOTAL_COUNT.toString() + Table.GRADES);	
-        return commonMapper.totalCount(bx)!=0?Messenger.SUCCESS:Messenger.FAILURE;
+        return gradeRepository.count() !=0 ?Messenger.SUCCESS:Messenger.FAILURE;
     }
     
     

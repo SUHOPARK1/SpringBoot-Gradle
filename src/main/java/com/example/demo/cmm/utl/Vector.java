@@ -1,5 +1,6 @@
 package com.example.demo.cmm.utl;
-
+import static com.example.demo.cmm.utl.Util.*;
+import static java.util.stream.Collectors.*;
 import java.util.ArrayList;
 
 import org.springframework.context.annotation.Lazy;
@@ -13,13 +14,14 @@ p.82 참조
  * */
 @Component("vc") @Lazy
 public class Vector<T> {
-	private ArrayList<T> inventory;
-	public Vector() {inventory = new ArrayList<T>();}
-	public void add(T t) {inventory.add(t);}
-	public T get(int i) {return inventory.get(i);}
-	public ArrayList<T> get(){return inventory;}
-	// set
-	public void clear() {inventory.clear();}
-	public int size() {return inventory.size();}
+	private ArrayList<T> vc;
+	public Vector() {vc = new ArrayList<T>();}
+	public void add(T t) {vc.add(t);}
+	public T get(int i) {return vc.get(i);}
+	public ArrayList<T> get(){return vc;}
+	public void clear() {vc.clear();}
+	public int size() {return vc.size();}
+	public void set(ArrayList<T> list) {vc = list;}
+
 }
 
