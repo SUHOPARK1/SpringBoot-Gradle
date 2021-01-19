@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Component("page") @Data @Lazy @NoArgsConstructor
+@Component("page") @Data @Lazy
 public class Pagination {
 
 	private int totalCount, startRow, endRow,
