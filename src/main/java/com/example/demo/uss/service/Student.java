@@ -24,7 +24,7 @@ public class Student {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "stu_num") private int stuNum;
 	@Column(name = "userid") private String userid;
-	@Column(name = "password") private String password;
+	@Column(name = "passwd") private String passwd;
 	@Column(name = "name") private String name;
 	@Column(name = "birthday") private String birthday;
 	@Column(name = "gender") private String gender;
@@ -40,14 +40,14 @@ public class Student {
 
 
     public Student(String userid,
-			String password,
+			String passwd,
 			String name,
 			String birthday, 
 			String gender,
 			String regDate,
 			String profileImage,int mgrNum) {
     	this.userid = userid;
-    	this.password = password;
+    	this.passwd = passwd;
     	this.name = name;
     	this.birthday = birthday;
     	this.gender = gender;
@@ -57,14 +57,14 @@ public class Student {
 
 	@Builder
 	private Student(String userid,
-					String password,
+					String passwd,
 					String name,
 					String birthday,
 					String regDate,
 					String profileImage){
 
 		this.userid = userid;
-		this.password = password;
+		this.passwd = passwd;
 		this.name = name;
 		this.regDate = regDate;
 		this.birthday = birthday;

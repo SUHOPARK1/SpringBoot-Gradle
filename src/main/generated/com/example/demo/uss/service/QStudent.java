@@ -32,7 +32,7 @@ public class QStudent extends EntityPathBase<Student> {
 
     public final StringPath name = createString("name");
 
-    public final StringPath password = createString("password");
+    public final StringPath passwd = createString("passwd");
 
     public final StringPath profileImage = createString("profileImage");
 
