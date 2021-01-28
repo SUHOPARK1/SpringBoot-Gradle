@@ -10,6 +10,7 @@ import java.util.Map;
 /**
  * Handles requests for the application home page.
  */
+
 @CrossOrigin(origins="*")
 @RestController
 public class RouterFunctionConfig {
@@ -17,10 +18,8 @@ public class RouterFunctionConfig {
         @Bean
         public RouterFunction<?> index() {
             return route(GET("/hello"),
-                    request -> ok().body(just("Hello World !!"), String.class));
-        }
-
-    */
+                    request -> ok().body(just("Hello World !!"), String.class));}
+   */
     @GetMapping("/test")
     public Map<?,?> hello(){
         System.out.println("React Boot connect Success");
